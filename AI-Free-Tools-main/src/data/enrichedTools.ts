@@ -179,7 +179,7 @@ const researched: Record<string, EnrichedToolData> = {
 
   'grok': {
     tagline: 'xAI conversational AI with real-time knowledge',
-    tags: ['chat', 'reasoning', 'real-time', 'open-source'],
+    tags: ['chat', 'reasoning', 'real-time'],
     features: [
       'Real-time information access via X',
       'Strong reasoning capabilities',
@@ -187,10 +187,9 @@ const researched: Record<string, EnrichedToolData> = {
       'Image understanding',
       'Free tier available',
     ],
-    badges: { openSource: true, freemium: true },
+    badges: { openSource: false, freemium: true },
     links: {
       website: 'https://grok.com',
-      github: 'https://github.com/xai-org/grok-1',
     },
   },
 
