@@ -735,29 +735,29 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         ref={el => {
           toolRefs.current[tool.id] = el;
         }}
-        className={`tool-card group relative cursor-pointer ${viewMode === 'grid' ? '' : 'flex items-center gap-4'} ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
+        className={`tool-card tool-card-glow group relative cursor-pointer ${viewMode === 'grid' ? '' : 'flex items-center gap-4'} ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
         style={{
           animationDelay: `${400 + index * 50}ms`,
           background: '#0f1117',
-          border: '2px solid #363c4e',
-          borderRadius: 12,
+          border: '3px solid #434a5e',
+          borderRadius: 14,
           padding: viewMode === 'grid' ? 20 : 16,
-          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-          transition: 'all 0.2s ease',
+          boxShadow: `0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)`,
+          transition: 'all 0.25s ease',
           ['--accent' as string]: accent,
         }}
         onMouseEnter={(e) => {
           const el = e.currentTarget;
-          el.style.borderColor = `${accent}cc`;
-          el.style.boxShadow = `0 8px 40px ${accent}33`;
-          el.style.transform = 'translateY(-3px)';
+          el.style.borderColor = accent;
+          el.style.boxShadow = `0 0 20px ${accent}40, 0 8px 40px ${accent}25`;
+          el.style.transform = 'translateY(-4px) scale(1.01)';
           el.style.background = '#13161f';
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget;
-          el.style.borderColor = '#363c4e';
-          el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
-          el.style.transform = 'translateY(0)';
+          el.style.borderColor = '#434a5e';
+          el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)';
+          el.style.transform = 'translateY(0) scale(1)';
           el.style.background = '#0f1117';
         }}
       >
@@ -794,15 +794,15 @@ export function AIToolsSection({ aiTools, categories }: Props) {
             </a>
 
             {/* Header: Logo + Name */}
-            <div className="flex items-start gap-4 mb-3">
+            <div className="tool-card-header flex items-start gap-4 mb-3">
               <div
-                className="flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform"
+                className="tool-card-logo flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden"
                 style={{
                   width: 52,
                   height: 52,
                   borderRadius: 14,
                   background: `linear-gradient(135deg, ${accent}40, ${accent}1a)`,
-                  border: `1px solid ${accent}80`,
+                  border: `2px solid ${accent}80`,
                   boxShadow: `0 4px 16px ${accent}40`,
                 }}
               >
@@ -1345,7 +1345,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
                     </div>
 
                     <div className={viewMode === 'grid'
-                      ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 md:gap-4 xl:gap-5'
+                      ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5'
                       : 'space-y-4'
                     }>
                       {visibleGroupTools.map((tool, index) => renderToolCard(tool, index))}
@@ -1368,7 +1368,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
           ) : (
             <>
               <div className={viewMode === 'grid'
-                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 md:gap-4 xl:gap-5'
+                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5'
                 : 'space-y-4'
               }>
                 {visibleTools.map((tool, index) => renderToolCard(tool, index))}
