@@ -229,7 +229,7 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
               <p className="text-xs text-gray-400">Share your thoughts, suggestions, or report bugs.</p>
               {feedbackStatus === 'ok' ? (
                 <div className="text-center py-4 space-y-3">
-                  <div className="text-emerald-400 font-semibold text-base">Thank You for your contribution!</div>
+                  <div className="text-emerald-400 font-semibold text-base">Thank You for your feedback!</div>
                   <p className="text-sm text-gray-300">
                     If you want to personally contact, email me here:
                   </p>
@@ -417,7 +417,7 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
           className={`text-center text-sm text-gray-400 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
         >
-          Made with love for BTC and blockchain.
+          Built with the help of Claude AI.
         </div>
       </div>
     </footer>
