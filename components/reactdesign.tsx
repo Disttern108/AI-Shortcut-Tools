@@ -722,19 +722,19 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         ref={el => {
           toolRefs.current[tool.id] = el;
         }}
-        className={`group relative cursor-pointer transition-all duration-300 hover:scale-[1.02] ${viewMode === 'grid'
+        className={`tool-card group relative cursor-pointer transition-all duration-300 hover:scale-[1.02] ${viewMode === 'grid'
           ? 'p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/10'
           : 'flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-white/5 to-white/[0.02] border border-white/10 hover:border-purple-500/30'
         } ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
         style={{ animationDelay: `${400 + index * 50}ms` }}
       >
-        {/* Visit button — top right, hover only */}
+        {/* Visit button — top right on desktop (hover), full-width row on mobile */}
         <a
           href={getSafeExternalUrl(tool.website) ?? '#'}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity border"
+          className="tool-card-visit-btn z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity border"
           style={{
             background: `${theme.color}1a`,
             borderColor: `${theme.color}33`,
@@ -747,7 +747,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         {viewMode === 'grid' ? (
           <>
             <div className="flex items-start gap-4 mb-4">
-              <div className="group-hover:scale-110 transition-transform">
+              <div className="flex-shrink-0 group-hover:scale-110 transition-transform">
                 <ToolLogo handle={tool.handle} name={tool.name} websiteUrl={tool.website} size={56} colorClass={colorClass} category={tool.category} />
               </div>
               <div className="flex-1 min-w-0">
@@ -1240,7 +1240,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
                     </div>
 
                     <div className={viewMode === 'grid'
-                      ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
+                      ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
                       : 'space-y-4'
                     }>
                       {visibleGroupTools.map((tool, index) => renderToolCard(tool, index))}
@@ -1263,7 +1263,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
           ) : (
             <>
               <div className={viewMode === 'grid'
-                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
+                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
                 : 'space-y-4'
               }>
                 {visibleTools.map((tool, index) => renderToolCard(tool, index))}
