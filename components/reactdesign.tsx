@@ -739,7 +739,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         style={{
           animationDelay: `${400 + index * 50}ms`,
           background: '#0f1117',
-          border: '1px solid #2a2f3d',
+          border: '2px solid #363c4e',
           borderRadius: 12,
           padding: viewMode === 'grid' ? 20 : 16,
           boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
@@ -755,7 +755,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget;
-          el.style.borderColor = '#2a2f3d';
+          el.style.borderColor = '#363c4e';
           el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
           el.style.transform = 'translateY(0)';
           el.style.background = '#0f1117';
