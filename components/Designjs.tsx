@@ -14,7 +14,7 @@ const particlesConfig = {
   background: { color: 'transparent' },
   fpsLimit: 60,
   particles: {
-    number: { value: 90, density: { enable: true, height: 950, width: 950 } },
+    number: { value: 30, density: { enable: true, height: 950, width: 950 } },
     color: { value: ['#7da3ff', '#8bb8ff', '#c9e1ff', '#ffc857'] },
     shape: { type: 'circle' },
     opacity: { value: { min: 0.1, max: 0.65 } },
@@ -28,7 +28,7 @@ const particlesConfig = {
     },
     move: {
       enable: true,
-      speed: 1.8,
+      speed: 0.8,
       direction: 'none' as const,
       outModes: { default: 'out' as const },
     },
@@ -36,7 +36,7 @@ const particlesConfig = {
   interactivity: {
     detectsOn: 'window' as const,
     events: {
-      onHover: { enable: true, mode: 'grab' as const },
+      onHover: { enable: false, mode: 'grab' as const },
       onClick: { enable: false, mode: 'push' as const },
       resize: { enable: true },
     },

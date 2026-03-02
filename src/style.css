@@ -94,7 +94,6 @@ body.reveal-ready [data-reveal].is-revealed {
     border: 1px solid rgba(148, 163, 184, 0.5);
     background: rgba(10, 14, 30, 0.25);
     box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
-    backdrop-filter: blur(6px);
     transition: transform 0.15s ease, border-color 0.2s ease;
   }
 
@@ -156,29 +155,11 @@ body.reveal-ready [data-reveal].is-revealed {
   }
 }
 
-.parallax-slow,
-.parallax-medium,
-.parallax-fast {
-  will-change: transform;
-}
-
-.parallax-slow {
-  transform: translate3d(0, calc(var(--scroll-y) * 0.03), 0);
-}
-
-.parallax-medium {
-  transform: translate3d(0, calc(var(--scroll-y) * 0.06), 0);
-}
-
-.parallax-fast {
-  transform: translate3d(0, calc(var(--scroll-y) * 0.09), 0);
-}
 
 .glass-card {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
   border: 1px solid rgba(148, 163, 184, 0.14);
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
-  backdrop-filter: blur(14px);
 }
 
 .scroll-progress {

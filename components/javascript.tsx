@@ -156,7 +156,6 @@ function App() {
           }
         }
 
-        document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
       });
     };
 
@@ -189,36 +188,20 @@ function App() {
       {/* Blockchain Background Effects */}
       <div className="fixed inset-0">
         {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-black to-cyan-950/20 parallax-slow" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-950/20 via-black to-cyan-950/20" />
         
         {/* Animated Grid */}
         <div className="absolute inset-0 opacity-[0.03]">
-          <div className="absolute inset-0 parallax-medium" style={{
-            backgroundImage: `linear-gradient(rgba(168, 85, 247, 0.3) 1px, transparent 1px), 
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(168, 85, 247, 0.3) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px)`,
             backgroundSize: '80px 80px'
           }} />
         </div>
 
-        {/* Floating Blockchain Nodes */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 2}s`,
-                animationDuration: `${10 + Math.random() * 20}s`
-              }}
-            />
-          ))}
-        </div>
-
         {/* Bitcoin/Ethereum Glows */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl parallax-fast" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl parallax-fast" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
       </div>
 
       {/* Navigation */}
