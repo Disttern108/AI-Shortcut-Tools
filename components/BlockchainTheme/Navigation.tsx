@@ -204,7 +204,7 @@ export function Navigation({ currentSection, scrollToSection }: { currentSection
 
   const badges = [
     { label: 'Privacy', icon: '\u{1F512}' },
-    { label: 'Blockchain', icon: '\u26D3' },
+    { label: 'All Free AI', icon: '\u{1F916}' },
     { label: 'No data stored', icon: '\u{1F5C4}' }
   ]
   const mobileTrustBadges = [
