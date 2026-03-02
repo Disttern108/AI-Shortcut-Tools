@@ -56,7 +56,7 @@ module.exports = async function handler(req: any, res: any) {
         const website = typeof body.website === 'string' ? body.website.trim() : '';
         const challenge = typeof body._challenge === 'string' ? body._challenge.trim() : '';
 
-        if (!name || !email || !email.includes('@') || !message || message.length > 5000 || !challenge) {
+        if (!name || (email && !email.includes('@')) || !message || message.length > 5000 || !challenge) {
             return res.status(400).json({ error: 'Invalid submission.' });
         }
 

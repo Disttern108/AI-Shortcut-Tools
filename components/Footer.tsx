@@ -99,8 +99,8 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
       setContactStatus('error')
       return
     }
-    if (!trimmedEmail) {
-      setContactError('Please enter your email.')
+    if (trimmedEmail && !trimmedEmail.includes('@')) {
+      setContactError('Please enter a valid email address.')
       setContactStatus('error')
       return
     }
@@ -115,7 +115,7 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
     try {
       await submitToApi({
         name: trimmedName,
-        email: trimmedEmail,
+        email: trimmedEmail || 'anonymous@noreply.local',
         message: trimmedSubject ? `Subject: ${trimmedSubject}\n\n${trimmedMessage}` : trimmedMessage,
         website: contactHoneypot,
       })
@@ -142,9 +142,9 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
       setFeedbackError('Please enter your name.')
       return
     }
-    if (!trimmedEmail) {
+    if (trimmedEmail && !trimmedEmail.includes('@')) {
       setFeedbackStatus('error')
-      setFeedbackError('Please enter your email.')
+      setFeedbackError('Please enter a valid email address.')
       return
     }
     if (!trimmedMessage) {
@@ -158,7 +158,7 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
     try {
       await submitToApi({
         name: trimmedName,
-        email: trimmedEmail,
+        email: trimmedEmail || 'anonymous@noreply.local',
         message: trimmedMessage,
         website: feedbackHoneypot,
       })
@@ -267,11 +267,10 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
                     value={feedbackEmail}
                     onChange={(e) => setFeedbackEmail(e.target.value)}
                     className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
-                    placeholder="Your email"
-                    type="email"
-                    required
+                    placeholder="Your email (optional)"
+                    type="text"
                     maxLength={254}
-                    aria-label="Your email"
+                    aria-label="Your email (optional)"
                   />
                   <textarea
                     value={feedbackMessage}
@@ -346,11 +345,10 @@ export function Footer({ scrollToSection }: { scrollToSection: (id: string) => v
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30"
-                  placeholder="Your email"
-                  type="email"
-                  required
+                  placeholder="Your email (optional)"
+                  type="text"
                   maxLength={254}
-                  aria-label="Your email"
+                  aria-label="Your email (optional)"
                 />
                 <input
                   value={contactSubject}
