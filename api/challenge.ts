@@ -68,7 +68,8 @@ export default function handler(req: ApiRequest, res: ApiResponse) {
 
     const secret = getSecret();
     if (!secret) {
-        return res.status(500).json({ error: 'Service unavailable.' });
+        const envKeys = Object.keys(process.env).filter(k => k.startsWith('BOT') || k.startsWith('SMTP') || k.startsWith('CONTACT'));
+        return res.status(500).json({ error: 'Service unavailable.', debug: { hasSecret: false, relevantEnvKeys: envKeys } });
     }
 
     const { token, expires } = createToken(secret);
