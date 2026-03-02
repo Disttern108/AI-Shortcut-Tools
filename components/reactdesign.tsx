@@ -728,24 +728,24 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         } ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
         style={{ animationDelay: `${400 + index * 50}ms` }}
       >
-        {/* Visit button — top right on desktop (hover), full-width row on mobile */}
-        <a
-          href={getSafeExternalUrl(tool.website) ?? '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="tool-card-visit-btn z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity border"
-          style={{
-            background: `${theme.color}1a`,
-            borderColor: `${theme.color}33`,
-            color: theme.color,
-          }}
-        >
-          Visit <ArrowRightIcon className="w-3.5 h-3.5" />
-        </a>
-
         {viewMode === 'grid' ? (
           <>
+            {/* Visit button — absolute top-right on desktop, hidden on mobile */}
+            <a
+              href={getSafeExternalUrl(tool.website) ?? '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="tool-card-visit-btn-desktop z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity border"
+              style={{
+                background: `${theme.color}1a`,
+                borderColor: `${theme.color}33`,
+                color: theme.color,
+              }}
+            >
+              Visit <ArrowRightIcon className="w-3.5 h-3.5" />
+            </a>
+
             <div className="flex items-start gap-4 mb-4">
               <div className="flex-shrink-0 group-hover:scale-110 transition-transform">
                 <ToolLogo handle={tool.handle} name={tool.name} websiteUrl={tool.website} size={56} colorClass={colorClass} category={tool.category} />
@@ -763,6 +763,22 @@ export function AIToolsSection({ aiTools, categories }: Props) {
             <div className="flex items-center justify-between">
               {badges}
             </div>
+
+            {/* Visit button — full-width at bottom on mobile only */}
+            <a
+              href={getSafeExternalUrl(tool.website) ?? '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="tool-card-visit-btn-mobile flex items-center justify-center gap-1 w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold border"
+              style={{
+                background: `${theme.color}1a`,
+                borderColor: `${theme.color}33`,
+                color: theme.color,
+              }}
+            >
+              Visit <ArrowRightIcon className="w-3.5 h-3.5" />
+            </a>
 
             {/* More details toggle */}
             <div className="mt-3 flex items-center justify-center">

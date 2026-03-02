@@ -250,28 +250,32 @@ body.reveal-ready [data-reveal].is-revealed {
 
 /* ─── Tool Card Mobile Responsive ─── */
 
-/* Desktop: visit button is absolute top-right, hover-only */
-.tool-card-visit-btn {
+/* Desktop: visit button absolute top-right, hover-only */
+.tool-card-visit-btn-desktop {
   position: absolute;
   top: 1rem;
   right: 1rem;
   opacity: 0;
 }
-.tool-card:hover .tool-card-visit-btn {
+.tool-card:hover .tool-card-visit-btn-desktop {
   opacity: 1;
+}
+
+/* Mobile visit button: hidden on desktop */
+.tool-card-visit-btn-mobile {
+  display: none;
 }
 
 /* Tablet and below (< 768px) */
 @media (max-width: 767px) {
-  /* Visit button: static, full-width, always visible */
-  .tool-card-visit-btn {
-    position: static;
-    opacity: 1;
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-    margin-top: 0.75rem;
-    padding: 0.5rem 0.75rem;
+  /* Hide desktop visit button on mobile */
+  .tool-card-visit-btn-desktop {
+    display: none;
+  }
+
+  /* Show mobile visit button at bottom */
+  .tool-card-visit-btn-mobile {
+    display: flex;
   }
 
   /* Reduce card padding */
