@@ -1,4 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+const crypto2 = require('crypto');
+const nodemailer2 = require('nodemailer');
 
 function verifyToken(token: string, secret: string): boolean {
     const parts = token.split('.');
@@ -6,8 +7,7 @@ function verifyToken(token: string, secret: string): boolean {
     const [nonce, expiresStr, sig] = parts;
     const expires = Number(expiresStr);
     if (!Number.isFinite(expires) || Date.now() > expires) return false;
-    const crypto = require('crypto');
-    const expected = crypto.createHmac('sha256', secret).update(`${nonce}.${expiresStr}`).digest('hex');
+    const expected = crypto2.createHmac('sha256', secret).update(`${nonce}.${expiresStr}`).digest('hex');
     if (sig.length !== expected.length) return false;
     let diff = 0;
     for (let i = 0; i < sig.length; i++) {
@@ -29,7 +29,7 @@ function isAllowedOrigin(origin: string | undefined): boolean {
     }
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async function handler(req: any, res: any) {
     try {
         if (req.method !== 'POST') {
             return res.status(405).json({ error: 'Method not allowed.' });
@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             return res.status(415).json({ error: 'Content-Type must be application/json.' });
         }
 
-        const origin = req.headers['origin'] as string | undefined;
+        const origin = req.headers['origin'];
         if (!isAllowedOrigin(origin)) {
             return res.status(403).json({ error: 'Forbidden.' });
         }
@@ -79,8 +79,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             return res.status(500).json({ error: 'Email service not configured.' });
         }
 
-        const nodemailer = require('nodemailer');
-        const transporter = nodemailer.createTransport({
+        const transporter = nodemailer2.createTransport({
             host: smtpHost,
             port: smtpPort,
             secure: true,
@@ -96,8 +95,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         });
 
         return res.status(200).json({ success: true });
-    } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Unknown error';
-        return res.status(500).json({ error: 'Failed to send feedback.', detail: msg });
+    } catch (err: any) {
+        return res.status(500).json({ error: 'Failed to send.', message: err.message });
     }
-}
+};

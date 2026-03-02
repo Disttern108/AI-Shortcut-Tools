@@ -1,6 +1,8 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+const crypto = require('crypto');
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+const TOKEN_TTL_MS = 5 * 60 * 1000;
+
+module.exports = function handler(req: any, res: any) {
     try {
         if (req.method !== 'GET') {
             return res.status(405).json({ error: 'Method not allowed.' });
@@ -10,24 +12,20 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         if (!secret) {
             return res.status(500).json({
                 error: 'Missing BOT_CHALLENGE_SECRET',
-                envKeys: Object.keys(process.env).filter(k =>
+                available: Object.keys(process.env).filter((k: string) =>
                     k.startsWith('BOT') || k.startsWith('SMTP') || k.startsWith('CONTACT')
                 ),
             });
         }
 
-        // Simple token: timestamp.random.hmac
-        const crypto = require('crypto');
         const nonce = crypto.randomBytes(16).toString('hex');
-        const expires = Date.now() + 5 * 60 * 1000;
+        const expires = Date.now() + TOKEN_TTL_MS;
         const data = `${nonce}.${expires}`;
         const sig = crypto.createHmac('sha256', secret).update(data).digest('hex');
-        const token = `${data}.${sig}`;
 
         res.setHeader('Cache-Control', 'no-store');
-        return res.status(200).json({ token, expires });
-    } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : String(err);
-        return res.status(500).json({ error: 'Function error', message });
+        return res.status(200).json({ token: `${data}.${sig}`, expires });
+    } catch (err: any) {
+        return res.status(500).json({ error: 'crash', message: err.message, stack: err.stack });
     }
-}
+};
