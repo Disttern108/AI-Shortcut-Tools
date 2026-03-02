@@ -248,7 +248,14 @@ body.reveal-ready [data-reveal].is-revealed {
   }
 }
 
-/* ─── Tool Card Mobile Responsive ─── */
+/* ─── Tool Card Redesign ─── */
+
+/* Badge base style */
+.tool-badge {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
 
 /* Desktop: visit button absolute top-right, hover-only */
 .tool-card-visit-btn-desktop {
@@ -268,52 +275,30 @@ body.reveal-ready [data-reveal].is-revealed {
 
 /* Tablet and below (< 768px) */
 @media (max-width: 767px) {
-  /* Hide desktop visit button on mobile */
   .tool-card-visit-btn-desktop {
     display: none;
   }
-
-  /* Show mobile visit button at bottom */
   .tool-card-visit-btn-mobile {
     display: flex;
   }
-
-  /* Reduce card padding */
   .tool-card {
-    padding: 14px !important;
-    border-radius: 10px !important;
+    padding: 16px !important;
   }
-
-  /* Badges: smaller on mobile */
-  .tool-card .flex.items-center.gap-1\.5.flex-wrap > div {
+  .tool-card h3 {
+    font-size: 16px !important;
+  }
+  .tool-badge {
     font-size: 11px;
     padding: 3px 8px;
-    gap: 4px;
-  }
-  .tool-card .flex.items-center.gap-1\.5.flex-wrap {
-    gap: 4px;
   }
 }
 
 /* Small phones (< 480px) */
 @media (max-width: 479px) {
-  /* Features grid: single column */
-  .tool-card ul.text-xs {
-    grid-template-columns: 1fr;
+  .tool-card {
+    padding: 14px !important;
   }
-
-  /* Tool name: slightly smaller */
   .tool-card h3 {
-    font-size: 15px;
-  }
-
-  /* Category text */
-  .tool-card p.text-sm.text-gray-500 {
-    font-size: 12px;
-  }
-
-  /* Description text */
-  .tool-card p.text-gray-400 {
-    font-size: 13px;
+    font-size: 15px !important;
   }
 }

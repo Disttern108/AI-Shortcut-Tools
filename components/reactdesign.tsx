@@ -645,41 +645,42 @@ export function AIToolsSection({ aiTools, categories }: Props) {
     const theme = getThemeLabel(colorClass);
     const isExpanded = expandedCardId === tool.id;
     const enriched = getEnrichedData(tool.handle);
+    const accent = theme.color;
 
     // Badge components shared between grid and list
     const themePill = (
       <div
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border"
+        className="tool-badge flex items-center gap-1.5 rounded-md"
         style={{
-          background: `${theme.color}1a`,
-          borderColor: `${theme.color}33`,
-          color: theme.color,
+          background: `${accent}26`,
+          border: `1px solid ${accent}80`,
+          color: accent,
         }}
       >
         <span
           className="inline-block w-1.5 h-1.5 rounded-full"
-          style={{ background: theme.color, boxShadow: `0 0 6px ${theme.color}` }}
+          style={{ background: accent, boxShadow: `0 0 6px ${accent}` }}
         />
         {theme.label}
       </div>
     );
 
     const badges = (
-      <div className="flex items-center gap-1.5 flex-wrap">
+      <div className="flex items-center gap-2 flex-wrap">
         {themePill}
         {tool.openSource && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border" style={{ background: 'rgba(16,185,129,0.15)', borderColor: 'rgba(16,185,129,0.3)', color: '#10b981' }}>
-            <CodeBracketsIcon className="w-4 h-4" /> Open Source
+          <div className="tool-badge flex items-center gap-1.5 rounded-md" style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.5)', color: '#10b981' }}>
+            <CodeBracketsIcon className="w-3.5 h-3.5" /> Open Source
           </div>
         )}
         {tool.free && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border" style={{ background: 'rgba(6,182,212,0.15)', borderColor: 'rgba(6,182,212,0.3)', color: '#06b6d4' }}>
-            <SparkleIcon className="w-4 h-4" /> Free
+          <div className="tool-badge flex items-center gap-1.5 rounded-md" style={{ background: 'rgba(6,182,212,0.15)', border: '1px solid rgba(6,182,212,0.5)', color: '#06b6d4' }}>
+            <SparkleIcon className="w-3.5 h-3.5" /> Free
           </div>
         )}
         {tool.privacy && (
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border" style={{ background: 'rgba(139,92,246,0.15)', borderColor: 'rgba(139,92,246,0.3)', color: '#8b5cf6' }}>
-            <ShieldIcon className="w-4 h-4" /> Privacy
+          <div className="tool-badge flex items-center gap-1.5 rounded-md" style={{ background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.5)', color: '#8b5cf6' }}>
+            <ShieldIcon className="w-3.5 h-3.5" /> Privacy
           </div>
         )}
       </div>
@@ -691,25 +692,37 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         className="transition-all duration-300 ease-in-out overflow-hidden"
         style={{ maxHeight: isExpanded ? '24rem' : '0' }}
       >
-        <div className="pt-3 mt-3 border-t border-white/10 space-y-2">
+        <div className="pt-4 space-y-3">
+          {/* Accent divider line */}
+          <div style={{ height: 1, background: `linear-gradient(90deg, ${accent}4d, transparent)` }} />
+
           <a
             href={getSafeExternalUrl(tool.website) ?? '#'}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-xs text-cyan-400 hover:text-cyan-300 truncate block"
+            className="text-xs hover:opacity-80 truncate block"
+            style={{ color: accent }}
           >
             {tool.website.replace(/^https?:\/\//, '').replace(/\/$/, '')}
           </a>
           {enriched?.features && enriched.features.length > 0 && (
-            <ul className="text-xs text-gray-400 space-y-1">
-              {enriched.features.slice(0, 4).map((f, i) => (
-                <li key={i} className="flex items-start gap-1.5">
-                  <CheckIcon className="w-3 h-3 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <div
+                className="uppercase tracking-widest"
+                style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: accent, marginBottom: 10 }}
+              >
+                Key Features
+              </div>
+              <ul className="space-y-2">
+                {enriched.features.slice(0, 4).map((f, i) => (
+                  <li key={i} className="flex items-start gap-2" style={{ fontSize: 13, fontWeight: 500, color: '#e2e8f0' }}>
+                    <span className="flex-shrink-0 mt-0.5" style={{ color: accent }}><CheckIcon className="w-3.5 h-3.5" /></span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
       </div>
@@ -722,11 +735,31 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         ref={el => {
           toolRefs.current[tool.id] = el;
         }}
-        className={`tool-card group relative cursor-pointer transition-all duration-300 hover:scale-[1.02] ${viewMode === 'grid'
-          ? 'p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 hover:border-purple-500/30 hover:shadow-2xl hover:shadow-purple-500/10'
-          : 'flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-white/5 to-white/[0.02] border border-white/10 hover:border-purple-500/30'
-        } ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
-        style={{ animationDelay: `${400 + index * 50}ms` }}
+        className={`tool-card group relative cursor-pointer ${viewMode === 'grid' ? '' : 'flex items-center gap-4'} ${highlightId === tool.id ? 'ring-2 ring-cyan-400/60 ring-offset-2 ring-offset-black/40' : ''}`}
+        style={{
+          animationDelay: `${400 + index * 50}ms`,
+          background: '#0f1117',
+          border: '1px solid #2a2f3d',
+          borderRadius: 12,
+          padding: viewMode === 'grid' ? 20 : 16,
+          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          transition: 'all 0.2s ease',
+          ['--accent' as string]: accent,
+        }}
+        onMouseEnter={(e) => {
+          const el = e.currentTarget;
+          el.style.borderColor = `${accent}cc`;
+          el.style.boxShadow = `0 8px 40px ${accent}33`;
+          el.style.transform = 'translateY(-3px)';
+          el.style.background = '#13161f';
+        }}
+        onMouseLeave={(e) => {
+          const el = e.currentTarget;
+          el.style.borderColor = '#2a2f3d';
+          el.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+          el.style.transform = 'translateY(0)';
+          el.style.background = '#0f1117';
+        }}
       >
         {viewMode === 'grid' ? (
           <>
@@ -736,30 +769,65 @@ export function AIToolsSection({ aiTools, categories }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="tool-card-visit-btn-desktop z-10 flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity border"
+              className="tool-card-visit-btn-desktop z-10 flex items-center gap-1.5 rounded-lg font-semibold transition-all"
               style={{
-                background: `${theme.color}1a`,
-                borderColor: `${theme.color}33`,
-                color: theme.color,
+                padding: '8px 16px',
+                fontSize: 13,
+                fontWeight: 600,
+                background: `${accent}33`,
+                border: `1px solid ${accent}99`,
+                color: accent,
+                borderRadius: 8,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = `${accent}e6`;
+                e.currentTarget.style.color = '#000';
+                e.currentTarget.style.borderColor = accent;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = `${accent}33`;
+                e.currentTarget.style.color = accent;
+                e.currentTarget.style.borderColor = `${accent}99`;
               }}
             >
               Visit <ArrowRightIcon className="w-3.5 h-3.5" />
             </a>
 
-            <div className="flex items-start gap-4 mb-4">
-              <div className="flex-shrink-0 group-hover:scale-110 transition-transform">
-                <ToolLogo handle={tool.handle} name={tool.name} websiteUrl={tool.website} size={56} colorClass={colorClass} category={tool.category} />
+            {/* Header: Logo + Name */}
+            <div className="flex items-start gap-4 mb-3">
+              <div
+                className="flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform"
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 14,
+                  background: `linear-gradient(135deg, ${accent}40, ${accent}1a)`,
+                  border: `1px solid ${accent}80`,
+                  boxShadow: `0 4px 16px ${accent}40`,
+                }}
+              >
+                <ToolLogo handle={tool.handle} name={tool.name} websiteUrl={tool.website} size={52} colorClass={colorClass} category={tool.category} />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold text-white group-hover:text-cyan-300 transition-colors mb-1 line-clamp-1">
+                <h3
+                  className="text-white line-clamp-1 transition-colors"
+                  style={{ fontSize: 18, fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.2 }}
+                >
                   {tool.name}
                 </h3>
-                <p className="text-sm text-gray-500">{tool.category}</p>
+                <p style={{ fontSize: 13, fontWeight: 400, color: '#94a3b8', marginTop: 4 }}>{tool.category}</p>
               </div>
             </div>
 
-            <p className="text-gray-400 text-sm mb-4 line-clamp-3">{tool.description}</p>
+            {/* Description */}
+            <p className="line-clamp-3" style={{ fontSize: 14, color: '#cbd5e1', lineHeight: 1.7, fontWeight: 400, marginTop: 12 }}>
+              {tool.description}
+            </p>
 
+            {/* Accent divider */}
+            <div style={{ height: 1, background: `linear-gradient(90deg, ${accent}4d, transparent)`, margin: '16px 0' }} />
+
+            {/* Badges */}
             <div className="flex items-center justify-between">
               {badges}
             </div>
@@ -770,11 +838,16 @@ export function AIToolsSection({ aiTools, categories }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="tool-card-visit-btn-mobile flex items-center justify-center gap-1 w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold border"
+              className="tool-card-visit-btn-mobile flex items-center justify-center gap-1.5 w-full rounded-lg font-semibold"
               style={{
-                background: `${theme.color}1a`,
-                borderColor: `${theme.color}33`,
-                color: theme.color,
+                padding: '10px 16px',
+                fontSize: 14,
+                fontWeight: 600,
+                marginTop: 12,
+                background: `${accent}33`,
+                border: `1px solid ${accent}99`,
+                color: accent,
+                borderRadius: 8,
               }}
             >
               Visit <ArrowRightIcon className="w-3.5 h-3.5" />
@@ -787,7 +860,10 @@ export function AIToolsSection({ aiTools, categories }: Props) {
                   e.stopPropagation();
                   setExpandedCardId(isExpanded ? null : tool.id);
                 }}
-                className="flex items-center gap-1 text-xs text-gray-500 hover:text-gray-300 transition-colors"
+                className="flex items-center gap-1 transition-colors"
+                style={{ fontSize: 12, color: '#94a3b8', fontWeight: 500 }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#e2e8f0'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; }}
               >
                 More details
                 <ChevronDownIcon className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
@@ -798,15 +874,25 @@ export function AIToolsSection({ aiTools, categories }: Props) {
           </>
         ) : (
           <>
-            <div className="group-hover:scale-110 transition-transform">
+            <div
+              className="flex-shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform"
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 12,
+                background: `linear-gradient(135deg, ${accent}40, ${accent}1a)`,
+                border: `1px solid ${accent}80`,
+                boxShadow: `0 4px 12px ${accent}33`,
+              }}
+            >
               <ToolLogo handle={tool.handle} name={tool.name} websiteUrl={tool.website} size={48} colorClass={colorClass} category={tool.category} />
             </div>
 
             <div className="flex-1 min-w-0">
-              <h3 className="text-base font-semibold text-white group-hover:text-cyan-300 transition-colors mb-1">
+              <h3 className="text-white transition-colors" style={{ fontSize: 16, fontWeight: 800, letterSpacing: '-0.02em' }}>
                 {tool.name}
               </h3>
-              <p className="text-sm text-gray-400 line-clamp-1">{tool.description}</p>
+              <p className="line-clamp-1" style={{ fontSize: 14, color: '#cbd5e1' }}>{tool.description}</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -816,7 +902,10 @@ export function AIToolsSection({ aiTools, categories }: Props) {
         )}
 
         {/* Hover Glow Effect */}
-        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${colorClass} opacity-0 group-hover:opacity-5 transition-opacity blur-xl pointer-events-none`} />
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+          style={{ borderRadius: 12, background: `radial-gradient(ellipse at center, ${accent}08, transparent 70%)` }}
+        />
       </div>
     );
   };
@@ -1256,7 +1345,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
                     </div>
 
                     <div className={viewMode === 'grid'
-                      ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
+                      ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 md:gap-4 xl:gap-5'
                       : 'space-y-4'
                     }>
                       {visibleGroupTools.map((tool, index) => renderToolCard(tool, index))}
@@ -1279,7 +1368,7 @@ export function AIToolsSection({ aiTools, categories }: Props) {
           ) : (
             <>
               <div className={viewMode === 'grid'
-                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'
+                ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5 md:gap-4 xl:gap-5'
                 : 'space-y-4'
               }>
                 {visibleTools.map((tool, index) => renderToolCard(tool, index))}
